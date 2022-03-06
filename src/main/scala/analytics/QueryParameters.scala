@@ -17,7 +17,7 @@ object QueryParameters {
 
   object UserId {
     def safe(userId: String): Either[ParseFailure, UserId] = Option(userId)
-      .filter(it => it.isBlank)
+      .filter(_.isBlank)
       .toRight(ParseFailure("The given user is invalid", s"The given user $userId is invalid"))
   }
 

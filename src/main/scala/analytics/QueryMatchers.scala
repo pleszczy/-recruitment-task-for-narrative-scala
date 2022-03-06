@@ -22,11 +22,11 @@ def help(id: Username | Password) =
 
 object QueryMatchers {
   given eventQueryParamDecoder: QueryParamDecoder[EventType] = QueryParamDecoder[String]
-    .emap(event => EventType.safe(event))
+    .emap(EventType.safe)
 
-  given userQueryParamDecoder: QueryParamDecoder[UserId] = QueryParamDecoder[String].emap(it => UserId.safe(it))
+  given userQueryParamDecoder: QueryParamDecoder[UserId] = QueryParamDecoder[String].emap(UserId.safe)
 
-  given timestampQueryParamDecoder: QueryParamDecoder[Timestamp] = QueryParamDecoder[Long].emap(it => Timestamp.safe(it))
+  given timestampQueryParamDecoder: QueryParamDecoder[Timestamp] = QueryParamDecoder[Long].emap(Timestamp.safe)
 
   object TimestampQueryParamMatcher extends ValidatingQueryParamDecoderMatcher[Timestamp]("timestamp")
 
