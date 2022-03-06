@@ -31,11 +31,15 @@ object Routes {
     HttpRoutes.of[F] {
       case GET -> Root / "analytics" :? TimestampQueryParamMatcher(maybeTimestamp) =>
         maybeTimestamp.fold(
-          parseFailures => BadRequest(s"The request has failed because $parseFailures"),
+          parseFailures => BadRequest(s"The request has failed because : ${sanitizedParseFailure(parseFailures)}"),
           year => Ok(AnalyticsResults(42, 69, 666).asJson)
         )
 
       case POST -> Root / "analytics" :? TimestampQueryParamMatcher(maybeTimestamp) +& UserQueryParamMatcher(maybeUserId) +& EventQueryParamMatcher(maybeEventType) => NoContent()
     }
 
+  private def sanitizedParseFailure[F[_] : Monad](parseFailures: NonEmptyList[ParseFailure]) =
+    parseFailures.map(_.sanitized).reduce {
+      (acc, it) => s"$acc and $it"
+    }
 }
