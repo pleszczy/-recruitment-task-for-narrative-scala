@@ -28,13 +28,11 @@ object Dependencies {
   )
 
   val logging = Seq(
-    "org.apache.logging.log4j" % "log4j-api" % Versions.log4j,
-    "org.apache.logging.log4j" % "log4j-core" % Versions.log4j % Runtime,
-    "org.apache.logging.log4j" % "log4j-slf4j-impl" % Versions.log4j
+    "ch.qos.logback"  %  "logback-classic"     % "1.2.10"   % Runtime
   )
 
   object Versions {
-    val log4j = "2.17.2"
+    val logback = "1.2.10"
     val scalactic = "3.2.9"
     val scalatest = "3.2.9"
     val sprayJson = "1.3.6"
