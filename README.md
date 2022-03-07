@@ -28,9 +28,9 @@ I try to pick frameworks and language features that I have not used before and w
   I tried it once, but I have failed fast due to not knowing cats and having some problems with the correct imports.
 
 ## TODO
-- setup kafka producer and send analytics to kafka
-- setup db framework and query druid for analytics
-- setup druid ingestion from kafka
+- setup querying druid
+- setup druid ingestion spec
+- setup configuration e.g. pureconfig
 - (optional) setup swagger
 - add unit/integration tests
 
