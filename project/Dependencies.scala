@@ -4,17 +4,19 @@ import sbt.librarymanagement.Configurations.{IntegrationTest, Test}
 object Dependencies {
 
   val unitTest = Seq(
+    "org.scalactic" %% "scalactic" % Versions.scalactic % Test,
     "org.scalatest" %% "scalatest" % Versions.scalatest % Test
   )
 
   val integrationTest = Seq(
+    "org.scalactic" %% "scalactic" % Versions.scalactic % IntegrationTest,
     "org.scalatest" %% "scalatest" % Versions.scalatest % IntegrationTest,
     "com.dimafeng" %% "testcontainers-scala-scalatest" % Versions.testcontainers % IntegrationTest,
     "org.scalatra" %% "scalatra" % Versions.scalatra % IntegrationTest
   )
 
   val util = Seq(
-    "org.scalactic" %% "scalactic" % Versions.scalactic
+    ("com.github.pureconfig" %% "pureconfig" % Versions.pureconfig).cross(CrossVersion.for3Use2_13)
   )
 
   val http = Seq(
@@ -25,6 +27,9 @@ object Dependencies {
   )
 
   val db = Seq(
+    // Couldn't find any scala 3 compatible druid clients.
+    // Druid has a rest api so Ill just use http4s-blaze-client to query it.
+    "org.http4s" %% "http4s-blaze-client" % Versions.http4sVersion,
   )
 
   val kafka = Seq(
@@ -45,7 +50,7 @@ object Dependencies {
     val scalatra = "2.8.2"
     val http4sVersion = "1.0.0-M31"
     val circeVersion = "0.15.0-M1"
-    val LogbackVersion = "1.2.10"
+    val logbackVersion = "1.2.10"
+    val pureconfig = "0.17.1"
   }
-
 }

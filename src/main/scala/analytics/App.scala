@@ -1,6 +1,8 @@
 package org.narrative
 package analytics
 
+import analytics.config.Config.service
+
 import cats.*
 import cats.data.{NonEmptyList, Validated}
 import cats.effect.*
@@ -21,7 +23,7 @@ object App extends IOApp {
 
   def run(args: List[String]): IO[ExitCode] = {
     BlazeServerBuilder[IO]
-      .bindHttp(port = 8080, host = "localhost")
+      .bindHttp(port = service.api.port, host = service.api.host)
       .withHttpApp(Routes.allRoutes)
       .resource
       .use(_ => IO.never)

@@ -3,7 +3,6 @@ This is a solution to a recruitment task for narrative
 
 ## TODO
 - setup querying druid
-- setup configuration e.g. pureconfig
 - setup swagger
 - add unit/integration tests
 - containerize the project (docker)
