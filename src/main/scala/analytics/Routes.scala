@@ -1,13 +1,13 @@
 package org.narrative
 package analytics
 
-import analytics.Model.AnalyticsResults
+import analytics.Model.{AnalyticsEvent, AnalyticsResults}
 import analytics.QueryMatchers.{EventQueryParamMatcher, TimestampQueryParamMatcher, UserQueryParamMatcher}
 import analytics.QueryParameters.Timestamp
+import analytics.kafka.KafkaProducer
 
 import cats.*
 import cats.data.{NonEmptyList, Validated}
-import cats.effect.*
 import cats.implicits.*
 import io.circe.generic.auto.*
 import io.circe.syntax.*
@@ -15,11 +15,9 @@ import org.http4s.*
 import org.http4s.Status.{BadRequest, NoContent, Ok}
 import org.http4s.circe.*
 import org.http4s.dsl.*
-import org.http4s.dsl.impl.*
-import org.http4s.headers.*
-import org.http4s.implicits.*
-import org.http4s.server.*
 
+import java.time.Instant
+import scala.util.Try
 
 object Routes {
   def allRoutes[F[_] : Monad]: HttpApp[F] = analyticsRoutes[F].orNotFound
@@ -35,7 +33,18 @@ object Routes {
           year => Ok(AnalyticsResults(42, 69, 666).asJson)
         )
 
-      case POST -> Root / "analytics" :? TimestampQueryParamMatcher(maybeTimestamp) +& UserQueryParamMatcher(maybeUserId) +& EventQueryParamMatcher(maybeEventType) => NoContent()
+      case POST -> Root / "analytics" :? TimestampQueryParamMatcher(maybeTimestamp) +& UserQueryParamMatcher(maybeUserId)
+        +& EventQueryParamMatcher(maybeEventType) =>
+        (maybeTimestamp,
+          maybeUserId,
+          maybeEventType)
+          .mapN(AnalyticsEvent.apply)
+          .fold(
+            parseFailures => BadRequest(s"The request has failed because : ${sanitizedParseFailure(parseFailures)}"),
+            analyticsEvent =>
+              KafkaProducer.sendMessage(analyticsEvent.userId, analyticsEvent)
+              NoContent()
+          )
     }
 
   private def sanitizedParseFailure[F[_] : Monad](parseFailures: NonEmptyList[ParseFailure]) =

@@ -10,7 +10,10 @@ ThisBuild / version := "0.0.1-SNAPSHOT"
 
 ThisBuild / scalaVersion := "3.1.1"
 
+resolvers += "confluent" at "https://packages.confluent.io/maven/"
+
 libraryDependencies ++= Dependencies.db
+libraryDependencies ++= Dependencies.kafka
 libraryDependencies ++= Dependencies.http
 libraryDependencies ++= Dependencies.util
 libraryDependencies ++= Dependencies.logging
@@ -20,7 +23,6 @@ run / javaOptions += s"-Dconfig.file=${sourceDirectory.value}/main/resources/con
 Test / javaOptions += s"-Dconfig.file=${sourceDirectory.value}/test/resources/conf/application.conf"
 
 scalacOptions ++= Seq(
-//  "-Xfatal-warnings", // FAIL THE COMPILATION IF THERE ARE ANY WARNINGS.
   "-encoding", "UTF-8", // Specify character encoding used by source files.
   "-unchecked", // Enable additional warnings where generated code depends on assumptions.
   "-explaintypes", // Explain type errors in more detail.

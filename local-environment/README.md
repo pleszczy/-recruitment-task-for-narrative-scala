@@ -25,6 +25,12 @@ Edit `environment` to suite your requirements and hardware capabilities
 ### Running
 Run `docker-compose up`
 
+#### Troubleshooting
+##### Removing containers
+- `docker rm -f $(docker ps -a -q)`
+##### Checking whats being send to kafka
+- `kcat -b localhost:29092 -t analytics.v1`
+
 ### Accessing druid console
 [Console](http://localhost:8888/unified-console.html)
 

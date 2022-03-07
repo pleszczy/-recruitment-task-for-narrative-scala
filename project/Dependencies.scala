@@ -27,11 +27,16 @@ object Dependencies {
   val db = Seq(
   )
 
+  val kafka = Seq(
+    ("org.apache.kafka" %% "kafka" % Versions.kafka).cross(CrossVersion.for3Use2_13)
+  )
+
   val logging = Seq(
-    "ch.qos.logback"  %  "logback-classic"     % "1.2.10"   % Runtime
+    "ch.qos.logback" % "logback-classic" % "1.2.10" % Runtime
   )
 
   object Versions {
+    val kafka = "3.1.0"
     val logback = "1.2.10"
     val scalactic = "3.2.9"
     val scalatest = "3.2.9"
