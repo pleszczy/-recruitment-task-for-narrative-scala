@@ -1,16 +1,17 @@
 package org.narrative
-package analytics
+package analytics.model
 
 import io.circe.{Decoder, Encoder}
 import org.http4s.ParseFailure
 
-import java.time.Instant
-import scala.util.Try
-
-object QueryParameters {
+object Model {
   opaque type EventType = "click" | "impression"
   opaque type UserId = String
   opaque type Timestamp = Long
+
+  final case class AnalyticsEvent(timestamp: Timestamp, userId: UserId, eventType: EventType)
+
+  final case class AnalyticsResults(unique_users: Long, clicks: Long, impressions: Long)
 
   implicit val encodeTimestamp: Encoder[Timestamp] = Encoder.encodeLong.contramap[Timestamp](it => it)
 

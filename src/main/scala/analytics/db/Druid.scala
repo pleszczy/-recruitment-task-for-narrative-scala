@@ -1,7 +1,7 @@
 package org.narrative
-package analytics.druid
+package analytics.db
 
-import analytics.QueryParameters.Timestamp
+import analytics.model.Model.Timestamp
 
 object Druid {
 

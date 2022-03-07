@@ -1,10 +1,9 @@
 package org.narrative
-package analytics
+package analytics.routes
 
-import analytics.Model.{AnalyticsEvent, AnalyticsResults}
-import analytics.QueryMatchers.{EventQueryParamMatcher, TimestampQueryParamMatcher, UserQueryParamMatcher}
-import analytics.QueryParameters.Timestamp
 import analytics.kafka.KafkaProducer
+import analytics.model.Model.*
+import analytics.routes.QueryMatchers.*
 
 import cats.*
 import cats.data.{NonEmptyList, Validated}
@@ -15,9 +14,6 @@ import org.http4s.*
 import org.http4s.Status.{BadRequest, NoContent, Ok}
 import org.http4s.circe.*
 import org.http4s.dsl.*
-
-import java.time.Instant
-import scala.util.Try
 
 object Routes {
   def allRoutes[F[_] : Monad]: HttpApp[F] = analyticsRoutes[F].orNotFound
@@ -41,9 +37,10 @@ object Routes {
           .mapN(AnalyticsEvent.apply)
           .fold(
             parseFailures => BadRequest(s"The request has failed because : ${sanitizedParseFailure(parseFailures)}"),
-            analyticsEvent =>
+            analyticsEvent => {
               KafkaProducer.sendMessage(analyticsEvent.userId, analyticsEvent)
               NoContent()
+            }
           )
     }
 

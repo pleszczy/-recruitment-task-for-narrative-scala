@@ -1,13 +1,10 @@
 package org.narrative
-package analytics
+package analytics.routes
 
+import analytics.model.Model.{EventType, Timestamp, UserId}
 
-import analytics.QueryParameters.{EventType, Timestamp, UserId}
-
+import org.http4s.QueryParamDecoder
 import org.http4s.dsl.impl.ValidatingQueryParamDecoderMatcher
-import org.http4s.{ParseFailure, QueryParamDecoder}
-
-import scala.util.Try
 
 object QueryMatchers {
   given eventQueryParamDecoder: QueryParamDecoder[EventType] = QueryParamDecoder[String]

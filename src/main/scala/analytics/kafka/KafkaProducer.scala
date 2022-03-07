@@ -1,11 +1,9 @@
 package org.narrative
 package analytics.kafka
 
-import analytics.Model
-import analytics.Model.AnalyticsEvent
-import analytics.QueryParameters.UserId
 import analytics.config.Config
 import analytics.config.Config.service
+import analytics.model.Model.{AnalyticsEvent, UserId}
 
 import io.circe.generic.auto.*
 import io.circe.syntax.*
