@@ -22,7 +22,10 @@ object KafkaProducer {
 
   kafkaAdmin.createTopics(List(analyticsTopic).asJava)
 
+  // TODO: Temporarily switched kafka producer to synchronous mode so a NO_CONTENT is not returned to the client before the message is successfully sent and ack'ed
+  //  Try to find a better idiomatic way for that
+  // TODO: Shutdown kafka producer cleanly. It should flush the current batch before the application is terminated
   def sendMessage(key: UserId, value: AnalyticsEvent) =
-    kafkaProducer.send(new ProducerRecord(analyticsTopic.name(), key, value.asJson.toString))
+    kafkaProducer.send(new ProducerRecord(analyticsTopic.name(), key, value.asJson.toString)).get()
 
 }
