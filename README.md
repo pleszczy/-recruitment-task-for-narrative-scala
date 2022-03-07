@@ -31,11 +31,21 @@ I try to pick frameworks and language features that I have not used before and w
 - setup querying druid
 - setup druid ingestion spec
 - setup configuration e.g. pureconfig
-- (optional) setup swagger
+- setup swagger
 - add unit/integration tests
 
 ## API
-![Capture](https://user-images.githubusercontent.com/476428/156937576-31dbdcac-be2c-4f5d-842c-dfd40c5b0879.PNG)
+TODO: Move to swagger
+### Rest
+```shell
+http get "http://localhost:8080/analytics?timestamp=$(date +%s)"
+http post "http://localhost:8080/analytics?timestamp=$(date +%s)&user=piotr&event=click"
+````
+![image](https://user-images.githubusercontent.com/476428/157098990-8a4a0684-e602-491b-b4e6-06813d5998f5.png)
+### Druid
+[Druid console](http://localhost:8888/unified-console.html#query)
+
+![image](https://user-images.githubusercontent.com/476428/157099307-08304548-f1d6-4b54-9c00-1c23f3e47737.png)
 
 ### The task
 As a part of integrating with our partners, Narrative supports collecting data on website visitors and returning some basic analytics on those visitors. The goal of this task is to implement a basic endpoint for this use case. It should accept the following over HTTP:
