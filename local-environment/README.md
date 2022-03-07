@@ -4,7 +4,7 @@
 Edit `environment` to suite your requirements and hardware capabilities
 
 ### Running
-Run `docker-compose up`
+- `docker-compose up`
 
 #### Troubleshooting
 ##### Removing containers

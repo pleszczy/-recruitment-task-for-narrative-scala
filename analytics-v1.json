@@ -1,0 +1,57 @@
+{
+  "type": "kafka",
+  "dataSchema": {
+    "dataSource": "analytics-v1",
+    "parser": {
+      "type": "string",
+      "parseSpec": {
+        "format": "json",
+        "timestampSpec": {
+          "column": "timestamp",
+          "format": "auto"
+        },
+        "dimensionsSpec": {
+          "dimensions": [
+            "userId",
+            "eventType"
+          ]
+        }
+      }
+    },
+    "metricsSpec": [
+      {
+        "type": "count",
+        "name": "count"
+      },
+      {
+        "type": "hyperUnique",
+        "name": "userId.hll",
+        "fieldName": "userId"
+      }
+    ],
+    "granularitySpec": {
+      "type": "uniform",
+      "segmentGranularity": "MONTH",
+      "queryGranularity": "HOUR",
+      "intervals": [
+        "2022-03-07/2031-12-01"
+      ]
+    }
+  },
+  "tuningConfig": {
+    "type": "kafka",
+    "maxRowsInMemory": 50000,
+    "intermediatePersistPeriod": "PT1M",
+    "maxRowsPerSegment": 5000000
+  },
+  "ioConfig": {
+    "topic": "analytics-v1",
+    "consumerProperties": {
+      "bootstrap.servers": "kafka:9092"
+    },
+    "useEarliestOffset": true,
+    "taskCount": 1,
+    "replicas": 1,
+    "taskDuration": "PT1H"
+  }
+}

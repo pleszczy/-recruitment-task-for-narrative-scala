@@ -1,38 +1,17 @@
-<!--
-  ~ Licensed to the Apache Software Foundation (ASF) under one
-  ~ or more contributor license agreements.  See the NOTICE file
-  ~ distributed with this work for additional information
-  ~ regarding copyright ownership.  The ASF licenses this file
-  ~ to you under the Apache License, Version 2.0 (the
-  ~ "License"); you may not use this file except in compliance
-  ~ with the License.  You may obtain a copy of the License at
-  ~
-  ~   http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing,
-  ~ software distributed under the License is distributed on an
-  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  ~ KIND, either express or implied.  See the License for the
-  ~ specific language governing permissions and limitations
-  ~ under the License.
-  -->
-
-## Background
+# Overview
 This is a solution to a recruitment task for narrative
-
-I treat these kinds of recruitment tasks as an opportunity to learn something new.
-I try to pick frameworks and language features that I have not used before and wouldn't necessarily use in a production environment.
-
-- used scala 3 because I have not tried the new features yet. I have worked mostly with scala 2.12
-- used http4s and cats because I like functional programing, and I have not used it before. 
-  I tried it once, but I have failed fast due to not knowing cats and having some problems with the correct imports.
 
 ## TODO
 - setup querying druid
-- setup druid ingestion spec
 - setup configuration e.g. pureconfig
 - setup swagger
 - add unit/integration tests
+- containerize the project (docker)
+
+## How to run
+- start docker and kafka `docker-compose -f "./local-environment/docker-compose.yml" up`
+- start the application `sbt run`
+- upload the druid ingestion spec `curl -X POST -H 'Content-Type: application/json' -d @analytics-v1.json http://localhost:8081/druid/indexer/v1/supervisor`
 
 ## API
 TODO: Move to swagger
