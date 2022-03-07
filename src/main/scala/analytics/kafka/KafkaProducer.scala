@@ -30,7 +30,7 @@ object KafkaProducer {
     "max.in.flight.requests.per.connection" -> "5",
   )
 
-  val analyticsTopic = new NewTopic("analytics.v1", 18, 1.toShort)
+  val analyticsTopic = new NewTopic("analytics-v1", 18, 1.toShort)
   val kafkaAdmin: Admin = Admin.create(adminSettings.asJava)
   val kafkaProducer: KafkaProducer[UserId, String] = new KafkaProducer[UserId, String](producerSettings.asJava)
 
