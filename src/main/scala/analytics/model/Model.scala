@@ -13,17 +13,17 @@ object Model {
 
   final case class AnalyticsResults(unique_users: Long, clicks: Long, impressions: Long)
 
-  implicit val encodeTimestamp: Encoder[Timestamp] = Encoder.encodeLong.contramap[Timestamp](it => it)
+  given encodeTimestamp: Encoder[Timestamp] = Encoder.encodeLong.contramap[Timestamp](it => it)
 
-  implicit val decodeInstant: Decoder[Timestamp] = Decoder.decodeLong.emapTry(it => Timestamp.safe(it).toTry)
+  given decodeInstant: Decoder[Timestamp] = Decoder.decodeLong.emapTry(it => Timestamp.safe(it).toTry)
 
-  implicit val encodeUserId: Encoder[UserId] = Encoder.encodeString.contramap[UserId](it => it)
+  given encodeUserId: Encoder[UserId] = Encoder.encodeString.contramap[UserId](it => it)
 
-  implicit val decodeUserId: Decoder[UserId] = Decoder.decodeString.emapTry(str => UserId.safe(str).toTry)
+  given decodeUserId: Decoder[UserId] = Decoder.decodeString.emapTry(str => UserId.safe(str).toTry)
 
-  implicit val encodeEventType: Encoder[EventType] = Encoder.encodeString.contramap[EventType](it => it)
+  given encodeEventType: Encoder[EventType] = Encoder.encodeString.contramap[EventType](it => it)
 
-  implicit val decodeEventType: Decoder[EventType] = Decoder.decodeString.emapTry(str => EventType.safe(str).toTry)
+  given decodeEventType: Decoder[EventType] = Decoder.decodeString.emapTry(str => EventType.safe(str).toTry)
 
   object EventType {
     def safe(eventType: String): Either[ParseFailure, EventType] = eventType match
