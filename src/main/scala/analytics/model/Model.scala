@@ -9,10 +9,6 @@ object Model {
   opaque type UserId = String
   opaque type Timestamp = Long
 
-  final case class AnalyticsEvent(timestamp: Timestamp, userId: UserId, eventType: EventType)
-
-  final case class AnalyticsResults(unique_users: Long, clicks: Long, impressions: Long)
-
   given encodeTimestamp: Encoder[Timestamp] = Encoder.encodeLong.contramap[Timestamp](it => it)
 
   given decodeInstant: Decoder[Timestamp] = Decoder.decodeLong.emapTry(it => Timestamp.safe(it).toTry)
@@ -24,6 +20,10 @@ object Model {
   given encodeEventType: Encoder[EventType] = Encoder.encodeString.contramap[EventType](it => it)
 
   given decodeEventType: Decoder[EventType] = Decoder.decodeString.emapTry(str => EventType.safe(str).toTry)
+
+  final case class AnalyticsEvent(timestamp: Timestamp, userId: UserId, eventType: EventType)
+
+  final case class AnalyticsResults(unique_users: Long, clicks: Long, impressions: Long)
 
   object EventType {
     def safe(eventType: String): Either[ParseFailure, EventType] = eventType match

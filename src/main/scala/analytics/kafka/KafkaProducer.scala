@@ -10,8 +10,6 @@ import io.circe.syntax.*
 import org.apache.kafka.clients.admin.{Admin, NewTopic}
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
-import java.util.Properties
-import scala.concurrent.duration.*
 import scala.jdk.CollectionConverters.*
 
 object KafkaProducer {

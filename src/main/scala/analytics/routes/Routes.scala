@@ -33,17 +33,16 @@ object Routes {
         maybeTimestamp.fold(
           parseFailures => BadRequest(s"The request has failed because : ${sanitizedParseFailure(parseFailures)}"),
           timestamp =>
-            Druid.analyticsResults(timestamp).fold(
-              parseFailure => InternalServerError(s"The request has failed because : ${parseFailure.sanitized}"),
-              analytics => Ok(analytics.head.asJson)
-            )
+            Druid.analyticsResults(timestamp)
+              .fold(
+                parseFailure => InternalServerError(s"The request has failed because : ${parseFailure.sanitized}"),
+                analytics => Ok(analytics.head.asJson)
+              )
         )
 
       case POST -> Root / "analytics" :? TimestampQueryParamMatcher(maybeTimestamp) +& UserQueryParamMatcher(maybeUserId)
         +& EventQueryParamMatcher(maybeEventType) =>
-        (maybeTimestamp,
-          maybeUserId,
-          maybeEventType)
+        (maybeTimestamp, maybeUserId, maybeEventType)
           .mapN(AnalyticsEvent.apply)
           .fold(
             parseFailures => BadRequest(s"The request has failed because : ${sanitizedParseFailure(parseFailures)}"),
@@ -55,7 +54,7 @@ object Routes {
     }
 
   private def sanitizedParseFailure[F[_] : Monad](parseFailures: NonEmptyList[ParseFailure]) =
-    parseFailures.map(_.sanitized).reduce {
-      (acc, it) => s"$acc and $it"
-    }
+    parseFailures
+      .map(_.sanitized)
+      .reduce((acc, it) => s"$acc and $it")
 }
