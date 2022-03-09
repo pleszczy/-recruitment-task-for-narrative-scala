@@ -12,7 +12,7 @@ case class Api(port: Int, host: String)
 
 case class Kafka(topic: Topic, properties: Map[String, String])
 
-case class Druid(url: String)
+case class Druid(schema: String, authority: String, sqlPath: String)
 
 case class Service(api: Api, kafka: Kafka, druid: Druid)
 
@@ -30,7 +30,7 @@ object Config {
 
   given kafkaReader: ConfigReader[Kafka] = ConfigReader.forProduct2("topic", "properties")(Kafka.apply)
 
-  given druidReader: ConfigReader[Druid] = ConfigReader.forProduct1("url")(Druid.apply)
+  given druidReader: ConfigReader[Druid] = ConfigReader.forProduct3("schema", "authority", "sqlPath")(Druid.apply)
 
   given serviceConfigReader: ConfigReader[Service] = ConfigReader.forProduct3("api", "kafka", "druid")(Service.apply)
 }

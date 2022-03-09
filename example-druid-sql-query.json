@@ -1,0 +1,3 @@
+{
+  "query": "SELECT SUM(\"count\") FILTER(WHERE eventType = 'click') AS clicks, SUM(\"count\") FILTER(WHERE eventType = 'impression') AS impressions, COUNT(DISTINCT userId) AS unique_users FROM \"analytics-v1\" WHERE __time >= DATE_TRUNC('hour', MILLIS_TO_TIMESTAMP(12)) - INTERVAL '1' HOUR"
+}

@@ -23,13 +23,14 @@ object Dependencies {
     "org.http4s" %% "http4s-blaze-server" % Versions.http4sVersion,
     "org.http4s" %% "http4s-circe" % Versions.http4sVersion,
     "org.http4s" %% "http4s-dsl" % Versions.http4sVersion,
-    "io.circe" %% "circe-generic" % Versions.circeVersion
+    "io.circe" %% "circe-generic" % Versions.circeVersion,
+    "io.circe" %% "circe-core" % Versions.circeVersion,
+    "io.circe" %% "circe-parser" % Versions.circeVersion
   )
 
   val db = Seq(
-    // Couldn't find any scala 3 compatible druid clients.
-    // Druid has a rest api so Ill just use http4s-blaze-client to query it.
-    "org.http4s" %% "http4s-blaze-client" % Versions.http4sVersion,
+    // Couldn't find any scala 3 compatible druid clients so just quering using rest
+    ("org.scalaj" %% "scalaj-http" % Versions.scalajHttp).cross(CrossVersion.for3Use2_13),
   )
 
   val kafka = Seq(
@@ -52,5 +53,6 @@ object Dependencies {
     val circeVersion = "0.15.0-M1"
     val logbackVersion = "1.2.10"
     val pureconfig = "0.17.1"
+    val scalajHttp = "2.4.2"
   }
 }
