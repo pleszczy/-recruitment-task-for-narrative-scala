@@ -30,23 +30,24 @@ jobs:
           name: narrative-analytics.jar
           path: target/scala-3.1.1/narrative-analytics.jar
   Publish:
-      needs: Build
-      runs-on: ubuntu-latest
-      steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-#      - name: Download artifact
-#        uses: actions/download-artifact@v2
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      #      - name: Download artifact
+      #        uses: actions/download-artifact@v2
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: ./Dockerfile
           push: true
-          tags: user/app:v${{github.run_number}}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/analytics:latest

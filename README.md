@@ -1,6 +1,6 @@
 # Overview
 
-This is a solution to a recruitment task for narrative
+This is a solution to a recruitment task for narrative.io
 
 ## TODO
 
