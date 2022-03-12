@@ -5,4 +5,5 @@ RUN mkdir /app
 RUN ls
 COPY  ./narrative-analytics.jar /app
 
+EXPOSE 8080
 CMD ["java","-jar","/app/narrative-analytics.jar"]

@@ -8,12 +8,14 @@ This is a solution to a recruitment task for narrative.io
 - setup swagger
 - add unit/integration tests
 
-## How to run
+## How to run locally
 
 - start docker and kafka `docker-compose -f "./local-environment/docker-compose.yml" up`
 - start the application by `sbt run` or `docker run docker.io/piotrkun/analytics:latest`
 - upload the druid ingestion
   spec `curl -X POST -H 'Content-Type: application/json' -d @analytics-v1.json http://localhost:8081/druid/indexer/v1/supervisor`
+
+### [link to local-environment documentation](local-environment/README.md)
 
 ## Docker
 - A docker image is being deployed to `docker.io/piotrkun/analytics:latest` by CI/CD on pushing to master
