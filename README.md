@@ -4,7 +4,6 @@ This is a solution to a recruitment task for narrative.io
 
 ## TODO
 
-- setup querying druid
 - setup swagger
 - add unit/integration tests
 
@@ -21,8 +20,6 @@ This is a solution to a recruitment task for narrative.io
 - A docker image is being deployed to `docker.io/piotrkun/analytics:latest` by CI/CD on pushing to master
 
 ## API
-
-TODO: Move to swagger
 
 ### Rest
 
