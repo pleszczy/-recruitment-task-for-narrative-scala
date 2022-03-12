@@ -1,0 +1,25 @@
+name: PR check workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Test:
+    name: Testing the PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Scala
+        uses: olafurpg/setup-scala@v13
+        with:
+          java-version: graalvm-ce-java11@21.1.0
+
+      - name: Compile
+        run: sbt clean compile
+
+      - name: Unit Tests
+        run: sbt test
