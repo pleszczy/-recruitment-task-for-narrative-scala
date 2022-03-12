@@ -8,12 +8,14 @@ This is a solution to a recruitment task for narrative.io
 - setup swagger
 - add unit/integration tests
 
-## How to run
+## How to run locally
 
 - start docker and kafka `docker-compose -f "./local-environment/docker-compose.yml" up`
 - start the application by `sbt run` or `docker run docker.io/piotrkun/analytics:latest`
 - upload the druid ingestion
   spec `curl -X POST -H 'Content-Type: application/json' -d @analytics-v1.json http://localhost:8081/druid/indexer/v1/supervisor`
+
+### [link to local-environment documentation](local-environment/README.md)
 
 ## Docker
 - A docker image is being deployed to `docker.io/piotrkun/analytics:latest` by CI/CD on pushing to master
@@ -68,3 +70,17 @@ building and running it. Although it should still pass muster in code review, it
 completely production ready in the submission. For example, using local storage like in-memory H2 instead of dedicated
 MySQL is OK. As a guide for design decisions, treat this exercise as the initial prototype of an MVP that will need to
 be productionalized and scaled out in the future, and be prepared for follow-up discussion on how that would look.
+
+
+
+-- SELECT
+-- SUM("count") FILTER(WHERE eventType = 'click') AS clicks,  
+-- SUM("count") FILTER(WHERE eventType = 'impression') AS impressions,
+-- COUNT(DISTINCT userId) AS unique_users
+-- FROM "analytics-v1"
+-- WHERE __time >= DATE_TRUNC('hour', MILLIS_TO_TIMESTAMP(1647111111111)) - INTERVAL '1' HOUR and __time <= DATE_TRUNC('hour', MILLIS_TO_TIMESTAMP(1647111111111))
+
+
+
+
+select * from "analytics-v1"
