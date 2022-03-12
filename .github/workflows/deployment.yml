@@ -1,10 +1,9 @@
-name: Build
+name: Deployment
 
 on:
   push:
-    branches: [ main, setup-github-actions-publish ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   Test:
@@ -35,21 +34,15 @@ jobs:
         with:
           name: narrative-analytics.jar
           path: target/scala-3.1.1/narrative-analytics.jar
+
   Publish:
     needs: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          context: .
           name: narrative-analytics.jar
-
-      - name: Display structure of downloaded files
-        run: ls -R
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
