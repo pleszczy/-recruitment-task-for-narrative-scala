@@ -57,6 +57,7 @@ services:
     depends_on:
       - zookeeper
       - postgres
+      - kafka
     ports:
       - "8081:8081"
     command:
