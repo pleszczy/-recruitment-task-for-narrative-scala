@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  test-PR:
-    name: Test PR
+  Test:
+    name: Testing the PR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,6 +23,3 @@ jobs:
 
       - name: Unit Tests
         run: sbt test
-
-#      - name: Integration Tests
-#        run: sbt IntegrationTest/test

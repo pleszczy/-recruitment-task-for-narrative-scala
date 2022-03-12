@@ -7,6 +7,7 @@ on:
 
 jobs:
   Test:
+    name: Testing again to make sure changes from master didnt break anything
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
