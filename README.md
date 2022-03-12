@@ -1,3 +1,5 @@
+![Deployment status](https://github.com/pleszczy/recruitment-task-for-narrative-scala/actions/workflows/deployment.yml/badge.svg)
+
 # Overview
 
 This is a solution to a recruitment task for narrative.io
