@@ -31,7 +31,7 @@
     ],
     "granularitySpec": {
       "type": "uniform",
-      "segmentGranularity": "MONTH",
+      "segmentGranularity": "DAY",
       "queryGranularity": "HOUR",
       "intervals": [
         "2022-03-07/2031-12-01"
@@ -41,8 +41,8 @@
   "tuningConfig": {
     "type": "kafka",
     "maxRowsInMemory": 50000,
-    "intermediatePersistPeriod": "PT1M",
-    "maxRowsPerSegment": 5000000
+    "intermediatePersistPeriod": "PT1S",
+    "maxRowsPerSegment": 500000
   },
   "ioConfig": {
     "topic": "analytics-v1",
