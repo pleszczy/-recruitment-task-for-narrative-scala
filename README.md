@@ -70,17 +70,3 @@ building and running it. Although it should still pass muster in code review, it
 completely production ready in the submission. For example, using local storage like in-memory H2 instead of dedicated
 MySQL is OK. As a guide for design decisions, treat this exercise as the initial prototype of an MVP that will need to
 be productionalized and scaled out in the future, and be prepared for follow-up discussion on how that would look.
-
-
-
--- SELECT
--- SUM("count") FILTER(WHERE eventType = 'click') AS clicks,  
--- SUM("count") FILTER(WHERE eventType = 'impression') AS impressions,
--- COUNT(DISTINCT userId) AS unique_users
--- FROM "analytics-v1"
--- WHERE __time >= DATE_TRUNC('hour', MILLIS_TO_TIMESTAMP(1647111111111)) - INTERVAL '1' HOUR and __time <= DATE_TRUNC('hour', MILLIS_TO_TIMESTAMP(1647111111111))
-
-
-
-
-select * from "analytics-v1"
