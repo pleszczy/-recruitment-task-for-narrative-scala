@@ -3,7 +3,9 @@ import sbt.librarymanagement.Configurations.Test
 lazy val root = (project in file("."))
   .settings(
     name := "Analytics",
-    idePackagePrefix := Some("org.narrative")
+    idePackagePrefix := Some("org.narrative"),
+    assembly / mainClass := Some("org.narrative.analytics.App"),
+    assembly / assemblyJarName := "narrative-analytics.jar",
   )
 
 ThisBuild / version := "0.0.1-SNAPSHOT"
@@ -32,3 +34,8 @@ scalacOptions ++= Seq(
   "-language:higherKinds", // Allow higher-kinded types
   "-language:implicitConversions" // Allow definition of implicit functions called views
 )
+
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case _ => MergeStrategy.first
+}
